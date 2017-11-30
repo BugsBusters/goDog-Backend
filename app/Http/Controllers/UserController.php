@@ -39,7 +39,7 @@ class UserController extends Controller
     public function create(Request $request){
         $newuser = new User();
         $newuser->name = $request->name;
-        $newuser->password = Hash::make($request->password);
+        $newuser->password = bcrypt($request->password);
         $newuser->email = $request->email;
         $newuser->cognome = $request->cognome;
         $newuser->fotopath = $request->fotopath;
@@ -74,7 +74,7 @@ class UserController extends Controller
     public function update(Request $request){
         $newuser = User::find($request->id);
         $newuser->name = $request->name;
-        $newuser->password = Hash::make($request->password);
+        $newuser->password = bcrypt($request->password);
         $newuser->email = $request->email;
         $newuser->cognome = $request->cognome;
         $newuser->fotopath = $request->fotopath;
