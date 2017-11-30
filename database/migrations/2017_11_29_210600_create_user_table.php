@@ -9,7 +9,6 @@ class CreateUserTable extends Migration {
 	{
 		Schema::table('users', function(Blueprint $table) {
 			$table->dropColumn('name')->default('');
-			$table->string('nome', 20)->default('');
 			$table->string('cognome', 20)->default('');
 			$table->string('fotopath', 300)->default('');
 			$table->date('datanascita')->default('')->default(NULL);
