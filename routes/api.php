@@ -74,7 +74,7 @@ Route::post('/modifica-recensione','RecensioneController@modificaRecensione');
 
 Route::post('/elimina-recensione','RecensioneController@eliminaRecensione');
 
-Route::get('/allrecensioni/{id}','RecensioneController@getByIdRecensable');
+Route::get('/recensioni/inserzione/{id}','RecensioneController@getByIdRecensable');
 
 
 // Standard API per inserzione
