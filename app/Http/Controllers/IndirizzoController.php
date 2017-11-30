@@ -65,5 +65,27 @@ class IndirizzoController extends Controller
             return response()->json('Indirizzo ' . $request->id . ' eliminato');
     }
 
+    public function getcomune($id) {
+        $indirizzo = Indirizzo::find($id);
+        $comune = $indirizzo->provincia()->get();
+        if (!is_null($comune))
+            return response()->json($comune,200);
+        return response()->json('errore',500);
+    }
 
+    public function getregione($id) {
+        $indirizzo = Indirizzo::find($id);
+        $regione = $indirizzo->regione()->get();
+        if (!is_null($regione))
+            return response()->json($regione,200);
+        return response()->json('errore',500);
+    }
+
+    public function getprovincia($id) {
+        $indirizzo = Indirizzo::find($id);
+        $provincia = $indirizzo->provincia()->get();
+        if (!is_null($provincia))
+            return response()->json($provincia,200);
+        return response()->json('errore',500);
+    }
 }

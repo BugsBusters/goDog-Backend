@@ -62,7 +62,9 @@ Route::get('indirizzo/{id}', 'IndirizzoController@getById');
 Route::post('inserisci-indirizzo', 'IndirizzoController@create');
 Route::post('modifica-indirizzo', 'IndirizzoController@update');
 Route::post('elimina-indirizzo', 'IndirizzoController@delete');
-
+Route::get('indirizzo/{id}/getcomune/', 'IndirizzoController@getcomune');
+Route::get('indirizzo/{id}/getprovincia/', 'IndirizzoController@getprovincia');
+Route::get('indirizzo/{id}/getregione/', 'IndirizzoController@getregione');
 
 
 // Standard API per recensione
@@ -93,3 +95,5 @@ Route::post('/modifica-inserzione', 'InserzioneController@modificainserzione');
 Route::post('/elimina-inserzione', 'InserzioneController@eliminainserzione');
 
 Route::get('/inserzioni/{tipo}', 'InserzioneController@inserzionebytipo');
+
+// Standard API

@@ -9,19 +9,19 @@ class Indirizzo extends Model
     protected $table = 'indirizzo';
 
     public function indirizzable(){
-        $this->morphTo();
+        return $this->morphTo();
     }
 
     public function comune(){
-        $this->hasOne('App\Comune', 'id', 'citta');
+        return $this->hasOne('App\Comune', 'id', 'citta');
     }
 
     public function regione(){
-        $this->hasOne('App\Regione', 'id', 'regione');
+        return $this->hasMany('App\Regione', 'id', 'regione');
     }
 
     public function provincia(){
-        $this->hasOne('App\Provincia', 'id', 'provincia');
+        return $this->hasMany('App\Provincia', 'id', 'provincia');
     }
 
 
