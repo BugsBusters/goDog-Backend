@@ -18,8 +18,7 @@ class CreateUserTable extends Migration {
     public function down()
     {
         Schema::table('users', function(Blueprint $table){
-            $table->string('name');
-            $table->dropColumn('nome');
+            $table->dropColumn('name');
             $table->dropColumn('cognome');
 
             $table->dropColumn('datanascita');
