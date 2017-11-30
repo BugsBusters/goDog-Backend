@@ -17,6 +17,8 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 
+// Registra
+Route::post('register', 'Auth\RegisterController@create');
 // Login
 Route::post('login', 'Auth\LoginController@login');
 // Logout
