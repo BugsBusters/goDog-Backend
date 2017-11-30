@@ -8,11 +8,12 @@ use Carbon\Carbon;
 
 class InserzioneController extends Controller
 {
+
+    /**
+     * Restituisce tutte le inserzioni con la data in formato italiano
+     */
     public function inserzioni(){
         $inserzioni= Inserzione::all();
-
-        //app = json_decode($inserzioni, true);
-        //return $app;
         $i=0;
         $app=array();
         foreach ($inserzioni as $item)
@@ -25,6 +26,11 @@ class InserzioneController extends Controller
         return response()->json($app,200);
     }
 
+    /**
+     * Restituisce l'iserzione con id passato come parametro con la data in formato italiano
+     *
+     * @var Request
+     */
     public function inserzione(Request $request){
         $inserzione= Inserzione::find($request->id);
         $app = json_decode($inserzione, true);
@@ -34,6 +40,12 @@ class InserzioneController extends Controller
         return response()->json($app,200);
     }
 
+
+    /**
+     * Crea una nuova inserzione in base ai dati della request
+     *
+     * @var Request
+     */
     public function inseriscinserzione(Request $request){
 
         $inserzione = new Inserzione();
@@ -51,6 +63,11 @@ class InserzioneController extends Controller
     }
 
 
+    /**
+     * Aggiorna una inserzione già esistente in base all'id usando i dati passati tramite request se non la trova ne crea una nuova
+     *
+     * @var Request
+     */
     public function modificainserzione(Request $request){
 
         $inserzione = Inserzione::find($request->id);
@@ -68,6 +85,12 @@ class InserzioneController extends Controller
         return response()->json('errore', 500);
     }
 
+
+    /**
+     * Elimina un'inserzione un base all'id
+     *
+     * @var Request
+     */
     public function eliminainserzione(Request $request){
 
         $inserzione = Inserzione::find($request->id);
