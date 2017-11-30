@@ -14,6 +14,9 @@ class InserzioneController extends Controller
      */
     public function inserzioni(){
         $inserzioni= Inserzione::all();
+
+        if($inserzioni==null)
+            return response()->json('nessuna inserzione', 500);
         $i=0;
         $app=array();
         foreach ($inserzioni as $item)
@@ -33,6 +36,10 @@ class InserzioneController extends Controller
      */
     public function inserzione(Request $request){
         $inserzione= Inserzione::find($request->id);
+
+        if($inserzione==null)
+            return response()->json('nessuna inserzione con id:'.$request->id, 500);
+
         $app = json_decode($inserzione, true);
 
         $app['updated_at']=$inserzione->updated_at->format('d/m/Y H:m:s');
@@ -94,6 +101,9 @@ class InserzioneController extends Controller
     public function eliminainserzione(Request $request){
 
         $inserzione = Inserzione::find($request->id);
+
+        if($inserzione==null)
+            return response()->json('nessuna inserzione con id:'.$request->id, 500);
 
         if ($inserzione->delete())
             return response()->json($inserzione, 200);
