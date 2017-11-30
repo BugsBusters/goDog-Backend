@@ -48,7 +48,7 @@ class LoginController extends Controller
             $user->generateToken();
 
             return response()->json([
-                'data' => $user->toArray(),
+                $user->toArray(),
             ]);
         }
 
@@ -65,7 +65,7 @@ class LoginController extends Controller
             $user->save();
         }
 
-        return response()->json(['data' => 'User logged out.'], 200);
+        return response()->json(['User logged out.'], 200);
     }
 
 }
