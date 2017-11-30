@@ -47,9 +47,9 @@ class LoginController extends Controller
             $user = $this->guard()->user();
             $user->generateToken();
 
-            return response()->json([
+            return response()->json(
                 $user,
-            ]);
+            );
         }
 
         return $this->sendFailedLoginResponse($request);
