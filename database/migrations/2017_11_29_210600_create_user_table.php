@@ -8,12 +8,12 @@ class CreateUserTable extends Migration {
 	public function up()
 	{
 		Schema::table('users', function(Blueprint $table) {
-			$table->dropColumn('name');			
-			$table->string('nome', 20);
-			$table->string('cognome', 20);
-			$table->string('fotopath', 300);
-			$table->date('datanascita');
-			$table->integer('plan')->default('0');
+			$table->dropColumn('name')->default('');
+			$table->string('nome', 20)->default('');
+			$table->string('cognome', 20)->default('');
+			$table->string('fotopath', 300)->default('');
+			$table->date('datanascita')->default('')->default(NULL);
+			$table->integer('plan')->default('0')->default(0);
 		});
 	}
 
