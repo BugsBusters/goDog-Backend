@@ -46,16 +46,16 @@ Route::post('logout', 'Auth\LoginController@logout');
 
 
 // Standard API per users
-Route::get('getutenti', 'UserController@getall');
-Route::get('getutente/{id}', 'UserController@getById');
+Route::get('utenti', 'UserController@getall');
+Route::get('utente/{id}', 'UserController@getById');
 Route::get('utente/{id}/getindirizzo', 'UserController@getindirizzo');
 Route::post('inserisci-utente', 'UserController@create');
 Route::post('modifica-utente', 'UserController@update');
 Route::post('elimina-utente', 'UserController@delete');
 
 // Standard API per indirizzo
-Route::get('getindirizzi', 'IndirizzoController@getall');
-Route::get('getindirizzo/{id}', 'IndirizzoController@getById');
+Route::get('indirizzi', 'IndirizzoController@getall');
+Route::get('indirizzo/{id}', 'IndirizzoController@getById');
 //Route::get('indirizzo/{id}/getrelated/{type}', 'IndirizzoController@getrelated');
 Route::post('inserisci-indirizzo', 'IndirizzoController@create');
 Route::post('modifica-indirizzo', 'IndirizzoController@update');
