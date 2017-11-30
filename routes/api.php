@@ -96,6 +96,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('/inserzioni/{tipo}', 'InserzioneController@inserzionebytipo');
 
+    Route::get('/inserzione-lookup/', 'InserzioneController@lookup');
 // Standard API
 
 });
