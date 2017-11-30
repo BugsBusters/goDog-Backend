@@ -76,6 +76,8 @@ Route::post('/elimina-recensione','RecensioneController@eliminaRecensione');
 
 Route::get('/recensioni/inserzione/{id}','RecensioneController@getByIdRecensable');
 
+Route::get('/recensioni/utente/{id}', 'RecensioneController@getByIdUtente');
+
 
 // Standard API per inserzione
 Route::get('/inserzioni', 'InserzioneController@inserzioni');

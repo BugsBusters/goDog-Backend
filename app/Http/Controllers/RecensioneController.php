@@ -96,6 +96,13 @@ class RecensioneController extends Controller
             return response()->json($recensioni, 200);
         return response()->json('errore', 500);
 
-
     }
+
+public function getByIdUtente($id){
+    $recensioni = \App\Recensione::where('user_id', $id )->get();
+
+    if(!is_null($recensioni))
+        return response()->json($recensioni, 200);
+    return response()->json('errore', 500);
+}
 }
