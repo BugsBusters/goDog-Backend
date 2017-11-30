@@ -25,6 +25,8 @@ class IndirizzoController extends Controller
         return response()->json('errore', 500);
     }
 
+
+
     public function create(Request $request){
         $newindirizzo = new Indirizzo();
         $newindirizzo->indirizzable_type = $request->indirizzable_type;

@@ -44,6 +44,17 @@ class InserzioneController extends Controller
         return response()->json($app,200);
     }
 
+    public function inserzionebytipo($tipo) {
+        $inserzione = Inserzione::where('tipoinserzione_id', $tipo)->get();
+
+        if($inserzione==null)
+            return response()->json('nessuna inserzione di questo tipo:'.$tipo, 500);
+
+        if (!is_null($inserzione))
+            return response()->json($inserzione, 200);
+        return response()->json('errore', 500);
+    }
+
 
     /**
      * Crea una nuova inserzione in base ai dati della request

@@ -87,3 +87,5 @@ Route::post('/inserisci-inserzione', 'InserzioneController@inseriscinserzione');
 Route::post('/modifica-inserzione', 'InserzioneController@modificainserzione');
 
 Route::post('/elimina-inserzione', 'InserzioneController@eliminainserzione');
+
+Route::get('/inserzioni/{tipo}', 'InserzioneController@inserzionebytipo');
