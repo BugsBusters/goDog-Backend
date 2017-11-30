@@ -1,10 +1,12 @@
+Header set Access-Control-Allow-Origin "*"
+Header set Access-Control-Allow-Headers "Origin, X-Requested-Width, Content-Type, Accept"
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
 
     RewriteEngine On
-
+    RewriteBase /backend
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
