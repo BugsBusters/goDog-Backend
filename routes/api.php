@@ -16,3 +16,14 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::get('/inserzioni', 'InserzioneController@inserzioni');
+
+Route::get('/inserzione/{id}', 'InserzioneController@inserzione');
+
+Route::post('/inserisci-inserzione', 'InserzioneController@inseriscinserzione');
+
+Route::post('/modifica-inserzione', 'InserzioneController@modificainserzione');
+
+Route::post('/elimina-inserzione', 'InserzioneController@eliminainserzione');
