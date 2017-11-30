@@ -14,7 +14,7 @@ class InserzioneController extends Controller
      */
     public function inserzioni(){
         $inserzioni= Inserzione::all();
-        if($inserzioni==null)
+        if(count($inserzioni)==0)
             return response()->json('nessuna inserzione', 500);
         $i=0;
         $app=array();
@@ -35,7 +35,7 @@ class InserzioneController extends Controller
      */
     public function inserzione(Request $request){
         $inserzione= Inserzione::find($request->id);
-        if($inserzione==null)
+        if(is_null($inserzione))
             return response()->json('nessuna inserzione con id:'.$request->id, 500);
         $app = json_decode($inserzione, true);
 
@@ -87,6 +87,8 @@ class InserzioneController extends Controller
     public function modificainserzione(Request $request){
 
         $inserzione = Inserzione::find($request->id);
+        if(is_null($inserzione))
+            return response()->json('nessuna inserzione con id:'.$request->id, 500);
 
         $inserzione->updated_at=Carbon::now(2)->toDateTimeString();
         $inserzione->inserzionable_type=$request->inserzionable_type;
@@ -110,7 +112,7 @@ class InserzioneController extends Controller
     public function eliminainserzione(Request $request){
 
         $inserzione = Inserzione::find($request->id);
-        if($inserzione==null)
+        if(is_null($inserzione))
             return response()->json('nessuna inserzione con id:'.$request->id, 500);
 
         if ($inserzione->delete())
