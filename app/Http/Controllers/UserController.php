@@ -19,7 +19,7 @@ class UserController extends Controller
             $user->datanascita = $giorno . '-' . $mese . '-' . $anno;
         }
         if (!is_null($users))
-            return response()->json($users, 200);
+            return response()->json($users->toArray(), 200);
         return response()->json('errore', 500);
     }
 
@@ -32,7 +32,7 @@ class UserController extends Controller
         $users->datanascita = $giorno . '-' . $mese . '-' . $anno;
 
         if (!is_null($users))
-            return response()->json($users, 200);
+            return response()->json($users->toArray(), 200);
         return response()->json('errore', 500);
     }
 
@@ -62,7 +62,7 @@ class UserController extends Controller
 
 
         if ($newuser->save() && $newindirizzo->save())
-            return response()->json([$newuser, $newindirizzo], 200);
+            return response()->json([$newuser->toArray(), $newindirizzo->toArray()], 200);
         else {
             $newuser->delete();
             $newindirizzo->delete();
@@ -87,7 +87,7 @@ class UserController extends Controller
 
 
         if ($newuser->save())
-            return response()->json($newuser, 200);
+            return response()->json($newuser->toArray(), 200);
         return response()->json('errore', 500);
     }
 
