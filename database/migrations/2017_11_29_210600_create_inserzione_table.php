@@ -11,10 +11,10 @@ class CreateInserzioneTable extends Migration {
 			$table->increments('id');
 			$table->timestamps();
 			$table->string('inserzionable_type', 30);
-			$table->text('contenuto');
+			$table->text('contenuto')->nullable();
 			$table->integer('indirizzo_id')->unsigned();
 			$table->integer('tipoinserzione_id')->unsigned();
-            $table->string('fotopath', 300);
+            $table->string('fotopath', 300)->nullable();
 		});
 	}
 

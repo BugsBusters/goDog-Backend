@@ -13,7 +13,7 @@ class CreateRecensioneTable extends Migration {
 			$table->string('recensable_type', 60);
 			$table->timestamps();
 			$table->tinyInteger('rate');
-			$table->text('commento');
+			$table->text('commento')->nullable();
 			$table->integer('user_id')->unsigned();
 		});
 	}

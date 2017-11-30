@@ -15,6 +15,11 @@ class RecensioneController extends Controller
 
         $tutteRecensioni = Recensione::all();
 
+
+        if(!isNull($tutteRecensioni))
+            return response()->json($tutteRecensioni, 200);
+
+        return response()->json('nessuna recensione', 500);
     }
 
     public function getById(Request $request){
