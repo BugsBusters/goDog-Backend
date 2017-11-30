@@ -16,6 +16,18 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('/recensioni','RecensioneController@allRec');
+
+Route::get('/recensione/{id}','RecensioneController@getById');
+
+Route::post('/inserisci-recensione','RecensioneController@newRec');
+
+Route::post('/modifica-recensione','RecensioneController@modificaRecensione');
+
+Route::post('/elimina-recensione','RecensioneController@eliminaRecensione');
+
+Route::get('/allrecensioni/{id}','RecensioneController@getByIdRecensable');
+
 
 
 Route::get('/inserzioni', 'InserzioneController@inserzioni');

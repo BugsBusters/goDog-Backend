@@ -10,8 +10,7 @@ class CreateInserzioneTable extends Migration {
 		Schema::create('inserzione', function(Blueprint $table) {
 			$table->increments('id');
 			$table->timestamps();
-			//$table->string('inserzionable_type', 30);
-			$table->integer('user_id');
+			$table->string('inserzionable_type', 30);
 			$table->text('contenuto');
 			$table->integer('indirizzo_id')->unsigned();
 			$table->integer('tipoinserzione_id')->unsigned();

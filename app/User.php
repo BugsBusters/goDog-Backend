@@ -29,4 +29,13 @@ class User extends Authenticatable
 
 
 
+    /**
+     * un indirizzo per ogni user
+     */
+    public function indirizzo()
+    {
+        return $this->hasOne('App\Indirizzo');
+    }
+
+
 }
