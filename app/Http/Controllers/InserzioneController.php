@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Inserzione;
+use App\Indirizzo;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -14,7 +15,8 @@ class InserzioneController extends Controller
      */
     public function inserzioni(){
         $inserzioni= Inserzione::all();
-        if(count($inserzioni)==0)
+
+        if(is_null($inserzioni))
             return response()->json('nessuna inserzione', 500);
         $i=0;
         $app=array();
@@ -117,6 +119,23 @@ class InserzioneController extends Controller
 
         if ($inserzione->delete())
             return response()->json($inserzione, 200);
+        return response()->json('errore', 500);
+    }
+
+    public function lookup(Request $request){
+        $data = $request->toArray();
+        $data['indirizzable_type'] = 'App\Inserzione';
+
+        $indirizzi = Indirizzo::where($data)->get();
+
+        $inserzioni = array();
+            foreach ($indirizzi as $indirizzo) {
+                $inserzione = Inserzione::find($indirizzo->indrizzable_id);
+                array_push($inserzioni, $inserzione);
+            }
+
+        if(!empty($inserzioni))
+            return response()->json($inserzioni, 200);
         return response()->json('errore', 500);
     }
 }
