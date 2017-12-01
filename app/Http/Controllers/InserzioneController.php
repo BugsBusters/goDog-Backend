@@ -170,7 +170,8 @@ class InserzioneController extends Controller
 
         $inserzioni = array();
         foreach ($indirizzi as $indirizzo) {
-            $inserzione = Inserzione::find($indirizzo->indrizzable_id);
+            $inserzione = Inserzione::where('id', $indirizzo->indrizzable_id)
+                                            ->where('tipoinserzione_id', $categoria)->get();                                    ;
             array_push($inserzioni, $inserzione);
         }
 
