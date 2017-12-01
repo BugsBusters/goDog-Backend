@@ -23,7 +23,7 @@ class AvvistamentoController extends Controller
 
     public function avvistamento(Request $request){
         $avvistamento= Avvistamento::find($request->id);
-        if(is_null($avvistamento))
+        if(count($avvistamento)==0)
             return response()->json('nessuna avvistamento con id:'.$request->id, 500);
         $app = json_decode($avvistamento, true);
 
@@ -49,7 +49,7 @@ class AvvistamentoController extends Controller
     public function modificaavvistamento(Request $request){
 
         $avvistamento = avvistamento::find($request->id);
-        if(is_null($avvistamento))
+        if(count($avvistamento)==0)
             return response()->json('nessuna avvistamento con id:'.$request->id, 500);
 
         $avvistamento->updated_at=Carbon::now(2)->toDateTimeString();
@@ -66,7 +66,7 @@ class AvvistamentoController extends Controller
     public function eliminaavvistamento(Request $request){
 
         $avvistamento = avvistamento::find($request->id);
-        if(is_null($avvistamento))
+        if(count($avvistamento)==0)
             return response()->json('nessuna avvistamento con id:'.$request->id, 500);
 
         if ($avvistamento->delete())

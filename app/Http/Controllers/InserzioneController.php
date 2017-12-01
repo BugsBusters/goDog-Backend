@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Comune;
 use App\Inserzione;
 use App\Indirizzo;
+use App\Provincia;
+use App\Regione;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Recensione;
@@ -16,7 +19,7 @@ class InserzioneController extends Controller
      */
     public function inserzioni(){
         $inserzioni= Inserzione::all();
-        if(is_null($inserzioni))
+        if(count($inserzioni)==0)
             return response()->json('nessuna inserzione', 500);
         $i=0;
         $app=array();
@@ -37,7 +40,7 @@ class InserzioneController extends Controller
      */
     public function inserzione(Request $request){
         $inserzione= Inserzione::find($request->id);
-        if(is_null($inserzione))
+        if(count($inserzione)==0)
             return response()->json('nessuna inserzione con id:'.$request->id, 500);
         $app = json_decode($inserzione, true);
 
@@ -49,10 +52,10 @@ class InserzioneController extends Controller
     public function inserzionebytipo($tipo) {
         $inserzione = Inserzione::where('tipoinserzione_id', $tipo)->get();
 
-        if(is_null($inserzione))
+        if(count($inserzione)==0)
             return response()->json('nessuna inserzione di questo tipo:'.$tipo, 500);
 
-        if (!is_null($inserzione))
+        if (count($inserzione)>0)
             return response()->json($inserzione, 200);
         return response()->json('errore', 500);
     }
@@ -63,7 +66,7 @@ class InserzioneController extends Controller
         if(count($inserzione)==0)
             return response()->json('nessuna inserzione di questo user:'.$user, 500);
 
-        if (!is_null($inserzione))
+        if (count($inserzione)>0)
             return response()->json($inserzione, 200);
         return response()->json('errore', 500);
     }
@@ -79,12 +82,10 @@ class InserzioneController extends Controller
         $inserzione = new Inserzione();
 
         $inserzione->updated_at=Carbon::now(2)->toDateTimeString();
-        $inserzione->inserzionable_type=$request->inserzionable_type;
-        $inserzione->inserzionable_id=$request->inserzionable_id;
         $inserzione->contenuto=$request->contenuto;
-        $inserzione->indirizzo_id=$request->indirizzo_id;
-        $inserzione->tipoinserzione_id=$request->tipoinserzione_id;
+        $inserzione->tipoinserzione=$request->tipoinserzione;
         $inserzione->fotopath=$request->fotopath;
+        $inserzione->user_id=$request->user_id;
 
         if ($inserzione->save())
             return response()->json($inserzione, 200);
@@ -100,16 +101,15 @@ class InserzioneController extends Controller
     public function modificainserzione(Request $request){
 
         $inserzione = Inserzione::find($request->id);
-        if(is_null($inserzione))
+
+        if(count($inserzione)==0)
             return response()->json('nessuna inserzione con id:'.$request->id, 500);
 
         $inserzione->updated_at=Carbon::now(2)->toDateTimeString();
-        $inserzione->inserzionable_type=$request->inserzionable_type;
-        $inserzione->inserzionable_id=$request->inserzionable_id;
         $inserzione->contenuto=$request->contenuto;
-        $inserzione->indirizzo_id=$request->indirizzo_id;
-        $inserzione->tipoinserzione_id=$request->tipoinserzione_id;
+        $inserzione->tipoinserzione=$request->tipoinserzione;
         $inserzione->fotopath=$request->fotopath;
+        $inserzione->user_id=$request->user_id;
 
         if ($inserzione->save())
             return response()->json($inserzione, 200);
@@ -125,7 +125,7 @@ class InserzioneController extends Controller
     public function eliminainserzione(Request $request){
 
         $inserzione = Inserzione::find($request->id);
-        if(is_null($inserzione))
+        if(count($inserzione)==0)
             return response()->json('nessuna inserzione con id:'.$request->id, 500);
 
         if ($inserzione->delete())
@@ -144,18 +144,48 @@ class InserzioneController extends Controller
 
     public function lookup(Request $request){
         $data = $request->toArray();
-        $data['indirizzable_type'] = 'App\Inserzione';
+        $categoria = $data['tipo'];
+        $geoids = array();
+        if (array_key_exists('citta',$data)) {
+            //$data['indirizzable_type'] = 'App\Inserzione';
+            $comune = Comune::select('id')->where('nome', $data['citta'])->first()->toArray();
 
-        $indirizzi = Indirizzo::where($data)->get();
+            $geoids['citta'] = $comune['id'];
+
+        }
+        if (array_key_exists('provincia',$data)) {
+            //$data['indirizzable_type'] = 'App\Inserzione';
+            $provincia = Provincia::select('id')->where('nome', $data['provincia'])->first()->toArray();
+            $geoids['provincia'] = $provincia['id'];
+
+        }
+        if (array_key_exists('regione',$data)) {
+            //$data['indirizzable_type'] = 'App\Inserzione';
+            $provincia = Regione::select('id')->where('nome', $data['regione'])->first()->toArray();
+            $geoids['regione'] = $provincia['id'];
+
+        }
+        $geoids['indirizzable_type'] = 'App\Inserzione';
+        $indirizzi = Indirizzo::where($geoids)->get();
 
         $inserzioni = array();
         foreach ($indirizzi as $indirizzo) {
-            $inserzione = Inserzione::find($indirizzo->indrizzable_id);
+            $inserzione = Inserzione::where('id', $indirizzo->indrizzable_id)
+                                            ->where('tipoinserzione_id', $categoria)->get();                                    ;
             array_push($inserzioni, $inserzione);
         }
 
         if(!empty($inserzioni))
             return response()->json($inserzioni, 200);
         return response()->json('errore', 500);
+    }
+    
+    
+    public function trovaCaniSmarriti(){
+        return response()->json(Inserzione::where('tipoinserzione_id','amico')->get(),200);
+        }
+    
+    public function trovaCaniSmarritiById($id){
+        return response()->json(Inserzione::find($id),200);
     }
 }

@@ -24,6 +24,10 @@ Route::post('login', 'Auth\LoginController@login');
 // Logout
 Route::post('logout', 'Auth\LoginController@logout');
 
+//ROUTES INSERZIONI AMICO SMARRITO (NON MI SERVE AUTH)
+
+Route::get('/inserzione/amico','InserzioneController@trovaCaniSmarriti');
+Route::get('/inserzione/amico/{id}','InserzioneController@trovaCaniSmarritiById');
 
 // API protette
 //Route::group(['middleware' => 'auth:api'], function () {
