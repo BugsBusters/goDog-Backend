@@ -82,7 +82,7 @@ Route::get('/media-rate/utente/{id}','UserController@rateById');
 
     Route::get('/recensioni/inserzione/{id}', 'RecensioneController@getByIdRecensable');
 
-    Route::get('/recensioni/utente/{id}', 'RecensioneController@getByIdUtente');
+    Route::get('/recensioni/utente/{id}', 'RecensioneController@getByIdUtente'); //id utente che ha recensito
 
 
 

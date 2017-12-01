@@ -40,20 +40,6 @@ class RecensioneController extends Controller
         $newrecensione->commento= $request->commento;
         $newrecensione->user_id= $request->user_id;
 
-        /**
-        // da italiano a americano
-        $anno_1 = substr( $request->created_at, 6, 4);
-        $mese_1 = substr( $request->created_at, 3,2);
-        $giorno_1 = substr( $request->created_at, 0,2);
-        $newrecensione->created_1 = $anno_1 . '-' . $mese_1 . '-' . $giorno_1;
-
-        // da italiano a americano
-        $anno_2 = substr( $request->updated_at, 6, 4);
-        $mese_2 = substr( $request->updated_at, 3,2);
-        $giorno_2 = substr( $request->updated_at, 0,2);
-        $newrecensione->created_2 = $anno_2 . '-' . $mese_2 . '-' . $giorno_2;
-         **/
-
         if($newrecensione->save())
             return response()->json($newrecensione, 200);
 
