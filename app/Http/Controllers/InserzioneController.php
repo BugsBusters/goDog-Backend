@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Comune;
 use App\Inserzione;
 use App\Indirizzo;
+use App\Provincia;
+use App\Regione;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Recensione;
