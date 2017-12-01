@@ -47,7 +47,7 @@ class InserzioneController extends Controller
     public function inserzionebytipo($tipo) {
         $inserzione = Inserzione::where('tipoinserzione_id', $tipo)->get();
 
-        if($inserzione==null)
+        if(count($inserzione))
             return response()->json('nessuna inserzione di questo tipo:'.$tipo, 500);
 
         if (!is_null($inserzione))

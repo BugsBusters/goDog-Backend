@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Avvistamento;
+use App\Inserzione;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -71,6 +72,19 @@ class AvvistamentoController extends Controller
         if ($avvistamento->delete())
             return response()->json($avvistamento, 200);
         return response()->json('errore', 500);
+    }
+
+    public function avvistamentibyinserzione($idinserzione){
+
+        $avvistamenti = Avvistamento::where('id_inserzione','=', $idinserzione)->get();
+
+        if(count($avvistamenti)==0)
+            return response()->json('nessun avvistamento relativo a questa inserzione :'.$idinserzione, 500);
+
+        if (!is_null($avvistamenti))
+            return response()->json($avvistamenti, 200);
+        return response()->json('errore', 500);
+
     }
 
 

@@ -102,6 +102,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('/avvistamento/{id}', 'AvvistamentoController@avvistamento');
 
+    //Route::get('/avvistamenti/{idinserzione}','AvvistamentoController@avvistamentibyinserzione');
+
     Route::post('/inserisci-avvistamento', 'AvvistamentoController@inserisciavvistamento');
 
     Route::post('/modifica-avvistamento', 'AvvistamentoController@modificaavvistamento');
@@ -111,9 +113,11 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 
 
+
+
 });
 
-
+Route::get('/avvistamenti/{idinserzione}','AvvistamentoController@avvistamentibyinserzione');
 
 
 //// Standard API per users
