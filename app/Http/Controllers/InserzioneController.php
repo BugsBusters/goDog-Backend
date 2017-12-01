@@ -141,9 +141,29 @@ class InserzioneController extends Controller
 
     public function lookup(Request $request){
         $data = $request->toArray();
-        $data['indirizzable_type'] = 'App\Inserzione';
+        $categoria = $data['tipo'];
+        $geoids = array();
+        if (array_key_exists('citta',$data)) {
+            //$data['indirizzable_type'] = 'App\Inserzione';
+            $comune = Comune::select('id')->where('nome', $data['citta'])->first()->toArray();
 
-        $indirizzi = Indirizzo::where($data)->get();
+            $geoids['citta'] = $comune['id'];
+
+        }
+        if (array_key_exists('provincia',$data)) {
+            //$data['indirizzable_type'] = 'App\Inserzione';
+            $provincia = Provincia::select('id')->where('nome', $data['provincia'])->first()->toArray();
+            $geoids['provincia'] = $provincia['id'];
+
+        }
+        if (array_key_exists('regione',$data)) {
+            //$data['indirizzable_type'] = 'App\Inserzione';
+            $provincia = Regione::select('id')->where('nome', $data['regione'])->first()->toArray();
+            $geoids['regione'] = $provincia['id'];
+
+        }
+        $geoids['indirizzable_type'] = 'App\Inserzione';
+        $indirizzi = Indirizzo::where($geoids)->get();
 
         $inserzioni = array();
         foreach ($indirizzi as $indirizzo) {
@@ -161,7 +181,7 @@ class InserzioneController extends Controller
         return response()->json(Inserzione::where('tipoinserzione_id','amico')->get(),200);
         }
     
-    public function trovaCaniSmarriti($id){
+    public function trovaCaniSmarritiById($id){
         return response()->json(Inserzione::find($id),200);
     }
 }
