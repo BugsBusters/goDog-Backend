@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Comune;
 use App\Inserzione;
 use App\Indirizzo;
+use App\Provincia;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -124,9 +126,29 @@ class InserzioneController extends Controller
 
     public function lookup(Request $request){
         $data = $request->toArray();
-        $data['indirizzable_type'] = 'App\Inserzione';
+        $categoria = $data['tipo'];
+        $geoids = array();
+        if (array_key_exists('citta',$data)) {
+            //$data['indirizzable_type'] = 'App\Inserzione';
+            $comune = Comune::select('id')->where('nome', $data['citta'])->first()->toArray();
 
-        $indirizzi = Indirizzo::where($data)->get();
+            $geoids['citta'] = $comune['id'];
+
+        }
+        if (array_key_exists('provincia',$data)) {
+            //$data['indirizzable_type'] = 'App\Inserzione';
+            $provincia = Provincia::select('id')->where('nome', $data['provincia'])->first()->toArray();
+            $geoids['provincia'] = $provincia['id'];
+
+        }
+        if (array_key_exists('regione',$data)) {
+            //$data['indirizzable_type'] = 'App\Inserzione';
+            $provincia = Regione::select('id')->where('nome', $data['regione'])->first()->toArray();
+            $geoids['regione'] = $provincia['id'];
+
+        }
+            $geoids['indirizzable_type'] = 'App\Inserzione';
+            $indirizzi = Indirizzo::where($geoids)->get();
 
         $inserzioni = array();
             foreach ($indirizzi as $indirizzo) {
