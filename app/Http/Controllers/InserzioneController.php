@@ -47,12 +47,12 @@ class InserzioneController extends Controller
     }
 
     public function inserzionebytipo($tipo) {
-        $inserzione = Inserzione::where('tipoinserzione_id', $tipo)->get();
+        $inserzione = Inserzione::where('tipoinserzione', $tipo)->get();
 
         if(count($inserzione)==0)
             return response()->json('nessuna inserzione di questo tipo:'.$tipo, 500);
 
-        if (count($inserzione)==0)
+        if (count($inserzione)>0)
             return response()->json($inserzione, 200);
         return response()->json('errore', 500);
     }
@@ -63,7 +63,7 @@ class InserzioneController extends Controller
         if(count($inserzione)==0)
             return response()->json('nessuna inserzione di questo user:'.$user, 500);
 
-        if (!is_null($inserzione))
+        if (count($inserzione)>0)
             return response()->json($inserzione, 200);
         return response()->json('errore', 500);
     }
@@ -79,12 +79,10 @@ class InserzioneController extends Controller
         $inserzione = new Inserzione();
 
         $inserzione->updated_at=Carbon::now(2)->toDateTimeString();
-        $inserzione->inserzionable_type=$request->inserzionable_type;
-        $inserzione->inserzionable_id=$request->inserzionable_id;
         $inserzione->contenuto=$request->contenuto;
-        $inserzione->indirizzo_id=$request->indirizzo_id;
-        $inserzione->tipoinserzione_id=$request->tipoinserzione_id;
+        $inserzione->tipoinserzione=$request->tipoinserzione;
         $inserzione->fotopath=$request->fotopath;
+        $inserzione->user_id=$request->user_id;
 
         if ($inserzione->save())
             return response()->json($inserzione, 200);
@@ -100,16 +98,15 @@ class InserzioneController extends Controller
     public function modificainserzione(Request $request){
 
         $inserzione = Inserzione::find($request->id);
-        if(is_null($inserzione))
+
+        if(count($inserzione)==0)
             return response()->json('nessuna inserzione con id:'.$request->id, 500);
 
         $inserzione->updated_at=Carbon::now(2)->toDateTimeString();
-        $inserzione->inserzionable_type=$request->inserzionable_type;
-        $inserzione->inserzionable_id=$request->inserzionable_id;
         $inserzione->contenuto=$request->contenuto;
-        $inserzione->indirizzo_id=$request->indirizzo_id;
-        $inserzione->tipoinserzione_id=$request->tipoinserzione_id;
+        $inserzione->tipoinserzione=$request->tipoinserzione;
         $inserzione->fotopath=$request->fotopath;
+        $inserzione->user_id=$request->user_id;
 
         if ($inserzione->save())
             return response()->json($inserzione, 200);
@@ -125,7 +122,7 @@ class InserzioneController extends Controller
     public function eliminainserzione(Request $request){
 
         $inserzione = Inserzione::find($request->id);
-        if(is_null($inserzione))
+        if(count($inserzione)==0)
             return response()->json('nessuna inserzione con id:'.$request->id, 500);
 
         if ($inserzione->delete())
