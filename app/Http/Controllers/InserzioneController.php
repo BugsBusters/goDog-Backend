@@ -168,15 +168,26 @@ class InserzioneController extends Controller
         $geoids['indirizzable_type'] = 'App\Inserzione';
         $indirizzi = Indirizzo::where($geoids)->get();
 
-        $inserzioni = array();
-        foreach ($indirizzi as $indirizzo) {
-            $inserzione = Inserzione::where('id', $indirizzo->indrizzable_id)
-                                            ->where('tipoinserzione_id', $categoria)->get();                                    ;
-            array_push($inserzioni, $inserzione);
+//        $inserzioni = array();
+//        foreach ($indirizzi as $indirizzo) {
+//            $inserzione = Inserzione::where('id', $indirizzo->indrizzable_id)
+//                                            ->where('tipoinserzione_id', $categoria)->get();                                    ;
+//            array_push($inserzioni, $inserzione);
+//        }
+
+        $i=0;
+        $inserzioni=array();
+        foreach ($indirizzi as $indirizzo)
+        {
+
+            $inserzioni[$i] =Inserzione::where('id', $indirizzo->indrizzable_id)
+                ->where('tipoinserzione_id', $categoria)->first();
+            $i++;
         }
 
+
         if(!empty($inserzioni))
-            return response()->json($inserzioni, 200);
+            return response($inserzioni, 200);
         return response()->json('errore', 500);
     }
     
