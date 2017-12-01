@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Inserzione;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Recensione;
 
 class InserzioneController extends Controller
 {
@@ -14,7 +15,7 @@ class InserzioneController extends Controller
      */
     public function inserzioni(){
         $inserzioni= Inserzione::all();
-        if(count($inserzioni)==0)
+        if(is_null($inserzioni))
             return response()->json('nessuna inserzione', 500);
         $i=0;
         $app=array();
@@ -47,7 +48,7 @@ class InserzioneController extends Controller
     public function inserzionebytipo($tipo) {
         $inserzione = Inserzione::where('tipoinserzione_id', $tipo)->get();
 
-        if(count($inserzione))
+        if(is_null($inserzione))
             return response()->json('nessuna inserzione di questo tipo:'.$tipo, 500);
 
         if (!is_null($inserzione))
@@ -118,5 +119,12 @@ class InserzioneController extends Controller
         if ($inserzione->delete())
             return response()->json($inserzione, 200);
         return response()->json('errore', 500);
+    }
+
+    public function rateById($id){
+        $recensioni = \App\Recensione::where('recensable_type', 'App\Inserzione')->where('recensable_id', $id )->avg('rate');
+        if (!is_null($recensioni))
+            return response()->json($recensioni, 200);
+        return response()->json('0', 200);
     }
 }

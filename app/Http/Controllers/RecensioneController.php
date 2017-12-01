@@ -40,7 +40,7 @@ class RecensioneController extends Controller
         $newrecensione->commento= $request->commento;
         $newrecensione->user_id= $request->user_id;
 
-/**
+        /**
         // da italiano a americano
         $anno_1 = substr( $request->created_at, 6, 4);
         $mese_1 = substr( $request->created_at, 3,2);
@@ -52,7 +52,7 @@ class RecensioneController extends Controller
         $mese_2 = substr( $request->updated_at, 3,2);
         $giorno_2 = substr( $request->updated_at, 0,2);
         $newrecensione->created_2 = $anno_2 . '-' . $mese_2 . '-' . $giorno_2;
-**/
+         **/
 
         if($newrecensione->save())
             return response()->json($newrecensione, 200);
@@ -95,7 +95,7 @@ class RecensioneController extends Controller
 
 
     public function getByIdRecensable($id){
-        $recensioni = \App\Recensione::where('recensable_id', $id )->get();
+        $recensioni = \App\Recensione::where('recensable_id', $id )->orderBy('created_at', 'desc')->get();
 
         if(!is_null($recensioni))
             return response()->json($recensioni, 200);
@@ -103,11 +103,19 @@ class RecensioneController extends Controller
 
     }
 
-public function getByIdUtente($id){
-    $recensioni = \App\Recensione::where('user_id', $id )->get();
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * tutte le recensioni da id oggetto recensito in ordine con l'ultimo in cima
+     */
 
-    if(!is_null($recensioni))
-        return response()->json($recensioni, 200);
-    return response()->json('errore', 500);
-}
+    public function getByIdUtente($id){
+        $recensioni = \App\Recensione::where('user_id', $id )->orderBy('created_at', 'desc')->get();
+
+        if(!is_null($recensioni))
+            return response()->json($recensioni, 200);
+        return response()->json('errore', 500);
+    }
+
 }

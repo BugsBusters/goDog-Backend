@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\User;
 use App\Indirizzo;
+use App\Recensione;
 
 class UserController extends Controller
 {
@@ -97,7 +98,7 @@ class UserController extends Controller
     }
 
     public function getindirizzo($id){
-       // $indirizzo = Indirizzo::where([, 'indirizzable_type'], [$id, 'App\User']);
+        // $indirizzo = Indirizzo::where([, 'indirizzable_type'], [$id, 'App\User']);
         $indirizzo = \App\Indirizzo::where('indrizzable_id', $id)->where('indirizzable_type', 'App\User')->get();
 
 
@@ -105,5 +106,17 @@ class UserController extends Controller
         if(!is_null($indirizzo))
             return response()->json($indirizzo, 200);
         return response()->json('Errore', 500);
+    }
+
+
+    public function rateById($id){
+        //$recensioni = \App\Recensione::where()->avg('rate');
+
+        //select from inserz or user where user_id or id == $id
+
+        $recensioni = \App\Recensione::where('recensable_type', 'App\User')->where('user_id', $id )->avg('rate');
+        if (!is_null($recensioni))
+        return response()->json($recensioni, 200);
+        return response()->json('0', 200);
     }
 }
