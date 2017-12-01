@@ -21,7 +21,7 @@ class InserzioneController extends Controller
         foreach ($inserzioni as $item)
         {
           $app[$i] = json_decode($item, true);
-          $app[$i]['updated_at']=$item->updated_at->format('d/m/Y H:m:s');
+          $app[$i]['updated_at']=$item->updated_at->format('d-m-Y H:m:s');
           $i++;
         }
 
