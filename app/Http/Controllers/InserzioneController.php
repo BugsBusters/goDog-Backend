@@ -16,7 +16,7 @@ class InserzioneController extends Controller
      */
     public function inserzioni(){
         $inserzioni= Inserzione::all();
-        if(is_null($inserzioni))
+        if(count($inserzioni)==0)
             return response()->json('nessuna inserzione', 500);
         $i=0;
         $app=array();
@@ -37,7 +37,7 @@ class InserzioneController extends Controller
      */
     public function inserzione(Request $request){
         $inserzione= Inserzione::find($request->id);
-        if(is_null($inserzione))
+        if(count($inserzione)==0)
             return response()->json('nessuna inserzione con id:'.$request->id, 500);
         $app = json_decode($inserzione, true);
 
@@ -49,10 +49,10 @@ class InserzioneController extends Controller
     public function inserzionebytipo($tipo) {
         $inserzione = Inserzione::where('tipoinserzione_id', $tipo)->get();
 
-        if(is_null($inserzione))
+        if(count($inserzione)==0)
             return response()->json('nessuna inserzione di questo tipo:'.$tipo, 500);
 
-        if (!is_null($inserzione))
+        if (count($inserzione)==0)
             return response()->json($inserzione, 200);
         return response()->json('errore', 500);
     }
