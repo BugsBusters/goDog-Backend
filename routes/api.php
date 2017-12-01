@@ -55,6 +55,8 @@ Route::post('inserisci-utente', 'UserController@create');
 Route::post('modifica-utente', 'UserController@update');
 Route::post('elimina-utente', 'UserController@delete');
 
+Route::get('/media-rate/utente/{id}','UserController@rateById');
+
 // Standard API per indirizzo
 Route::get('indirizzi', 'IndirizzoController@getall');
 Route::get('indirizzo/{id}', 'IndirizzoController@getById');
@@ -83,6 +85,7 @@ Route::get('/recensioni/inserzione/{id}','RecensioneController@getByIdRecensable
 Route::get('/recensioni/utente/{id}', 'RecensioneController@getByIdUtente');
 
 
+
 // Standard API per inserzione
 Route::get('/inserzioni', 'InserzioneController@inserzioni');
 
@@ -95,5 +98,7 @@ Route::post('/modifica-inserzione', 'InserzioneController@modificainserzione');
 Route::post('/elimina-inserzione', 'InserzioneController@eliminainserzione');
 
 Route::get('/inserzioni/{tipo}', 'InserzioneController@inserzionebytipo');
+
+Route::get('/media-rate/inserzione/{id}','InserzioneController@rateById');
 
 // Standard API
