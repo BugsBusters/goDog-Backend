@@ -155,4 +155,13 @@ class InserzioneController extends Controller
             return response()->json($inserzioni, 200);
         return response()->json('errore', 500);
     }
+    
+    
+    public function trovaCaniSmarriti(){
+        return response()->json(Inserzione::where('tipoinserzione_id','amico')->get(),200);
+        }
+    
+    public function trovaCaniSmarriti($id){
+        return response()->json(Inserzione::find($id),200);
+    }
 }
