@@ -40,7 +40,7 @@ class InserzioneController extends Controller
             return response()->json('nessuna inserzione con id:'.$request->id, 500);
         $app = json_decode($inserzione, true);
 
-        $app['updated_at']=$inserzione->updated_at->format('d/m/Y H:m:s');
+        $app['updated_at']=$inserzione->updated_at->format('d-m-Y H:m:s');
 
         return response()->json($app,200);
     }
