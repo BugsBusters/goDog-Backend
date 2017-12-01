@@ -101,4 +101,32 @@ Route::get('/inserzioni/{tipo}', 'InserzioneController@inserzionebytipo');
 
 Route::get('/media-rate/inserzione/{id}','InserzioneController@rateById');
 
-// Standard API
+
+// Standard API per avvistamento
+
+    Route::get('/avvistamenti', 'AvvistamentoController@avvistamenti');
+
+    Route::get('/avvistamento/{id}', 'AvvistamentoController@avvistamento');
+
+    Route::get('/avvistamenti/{idinserzione}','AvvistamentoController@avvistamentibyinserzione');
+
+    Route::post('/inserisci-avvistamento', 'AvvistamentoController@inserisciavvistamento');
+
+    Route::post('/modifica-avvistamento', 'AvvistamentoController@modificaavvistamento');
+
+    Route::post('/elimina-avvistamento', 'AvvistamentoController@eliminaavvistamento');
+
+    Route::get('/avvistamenti/{idinserzione}','AvvistamentoController@avvistamentibyinserzione');
+
+ //ricerca le inserzioni per filtri, possono essere passati uno o più dei seguenti campi:
+    // @integer citta per il comune
+    // @integer provincia
+    // @integer regione
+    // categoria per il tipo inserzione
+    Route::get('/inserzione-lookup/', 'InserzioneController@lookup');
+
+
+
+
+});
+

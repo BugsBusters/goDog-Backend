@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Inserzione;
+use App\Indirizzo;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Recensione;
@@ -22,13 +23,12 @@ class InserzioneController extends Controller
         foreach ($inserzioni as $item)
         {
           $app[$i] = json_decode($item, true);
-          $app[$i]['updated_at']=$item->updated_at->format('d/m/Y H:m:s');
+          $app[$i]['updated_at']=$item->updated_at->format('d-m-Y H:m:s');
           $i++;
         }
 
         return response()->json($app,200);
     }
-
 
     /**
      * Restituisce l'iserzione con id passato come parametro con la data in formato italiano
@@ -89,6 +89,8 @@ class InserzioneController extends Controller
     public function modificainserzione(Request $request){
 
         $inserzione = Inserzione::find($request->id);
+        if(is_null($inserzione))
+            return response()->json('nessuna inserzione con id:'.$request->id, 500);
 
         $inserzione->updated_at=Carbon::now(2)->toDateTimeString();
         $inserzione->inserzionable_type=$request->inserzionable_type;
@@ -112,7 +114,7 @@ class InserzioneController extends Controller
     public function eliminainserzione(Request $request){
 
         $inserzione = Inserzione::find($request->id);
-        if($inserzione==null)
+        if(is_null($inserzione))
             return response()->json('nessuna inserzione con id:'.$request->id, 500);
 
         if ($inserzione->delete())
@@ -125,5 +127,24 @@ class InserzioneController extends Controller
         if (!is_null($recensioni))
             return response()->json($recensioni, 200);
         return response()->json('0', 200);
+    }
+
+
+
+    public function lookup(Request $request){
+        $data = $request->toArray();
+        $data['indirizzable_type'] = 'App\Inserzione';
+
+        $indirizzi = Indirizzo::where($data)->get();
+
+        $inserzioni = array();
+        foreach ($indirizzi as $indirizzo) {
+            $inserzione = Inserzione::find($indirizzo->indrizzable_id);
+            array_push($inserzioni, $inserzione);
+        }
+
+        if(!empty($inserzioni))
+            return response()->json($inserzioni, 200);
+        return response()->json('errore', 500);
     }
 }

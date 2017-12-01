@@ -16,7 +16,7 @@ class RecensioneController extends Controller
         $tutteRecensioni = Recensione::all();
 
 
-        if(!isNull($tutteRecensioni))
+        if(!is_null($tutteRecensioni))
             return response()->json($tutteRecensioni, 200);
 
         return response()->json('nessuna recensione', 500);
