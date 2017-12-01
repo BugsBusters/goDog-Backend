@@ -46,61 +46,62 @@ Route::post('logout', 'Auth\LoginController@logout');
 //Route::post('elimina-indirizzo', 'IndirizzoController@delete');
 //});
 
-
+Route::group(['middleware' => 'auth:api'], function () {
 // Standard API per users
-Route::get('utenti', 'UserController@getall');
-Route::get('utente/{id}', 'UserController@getById');
-Route::get('utente/{id}/getindirizzo', 'UserController@getindirizzo');
-Route::post('inserisci-utente', 'UserController@create');
-Route::post('modifica-utente', 'UserController@update');
-Route::post('elimina-utente', 'UserController@delete');
+    Route::get('utenti', 'UserController@getall');
+    Route::get('utente/{id}', 'UserController@getById');
+    Route::get('utente/{id}/getindirizzo', 'UserController@getindirizzo');
+    Route::post('inserisci-utente', 'UserController@create');
+    Route::post('modifica-utente', 'UserController@update');
+    Route::post('elimina-utente', 'UserController@delete');
 
 Route::get('/media-rate/utente/{id}','UserController@rateById');
 
 // Standard API per indirizzo
-Route::get('indirizzi', 'IndirizzoController@getall');
-Route::get('indirizzo/{id}', 'IndirizzoController@getById');
+    Route::get('indirizzi', 'IndirizzoController@getall');
+    Route::get('indirizzo/{id}', 'IndirizzoController@getById');
 //Route::get('indirizzo/{id}/getrelated/{type}', 'IndirizzoController@getrelated');
-Route::post('inserisci-indirizzo', 'IndirizzoController@create');
-Route::post('modifica-indirizzo', 'IndirizzoController@update');
-Route::post('elimina-indirizzo', 'IndirizzoController@delete');
-Route::get('indirizzo/{id}/getcomune/', 'IndirizzoController@getcomune');
-Route::get('indirizzo/{id}/getprovincia/', 'IndirizzoController@getprovincia');
-Route::get('indirizzo/{id}/getregione/', 'IndirizzoController@getregione');
+    Route::post('inserisci-indirizzo', 'IndirizzoController@create');
+    Route::post('modifica-indirizzo', 'IndirizzoController@update');
+    Route::post('elimina-indirizzo', 'IndirizzoController@delete');
+    Route::get('indirizzo/{id}/getcomune/', 'IndirizzoController@getcomune');
+    Route::get('indirizzo/{id}/getprovincia/', 'IndirizzoController@getprovincia');
+    Route::get('indirizzo/{id}/getregione/', 'IndirizzoController@getregione');
 
 
 // Standard API per recensione
-Route::get('/recensioni','RecensioneController@allRec');
+    Route::get('/recensioni', 'RecensioneController@allRec');
 
-Route::get('/recensione/{id}','RecensioneController@getById');
+    Route::get('/recensione/{id}', 'RecensioneController@getById');
 
-Route::post('/inserisci-recensione','RecensioneController@newRec');
+    Route::post('/inserisci-recensione', 'RecensioneController@newRec');
 
-Route::post('/modifica-recensione','RecensioneController@modificaRecensione');
+    Route::post('/modifica-recensione', 'RecensioneController@modificaRecensione');
 
-Route::post('/elimina-recensione','RecensioneController@eliminaRecensione');
+    Route::post('/elimina-recensione', 'RecensioneController@eliminaRecensione');
 
-Route::get('/recensioni/inserzione/{id}','RecensioneController@getByIdRecensable');
+    Route::get('/recensioni/inserzione/{id}', 'RecensioneController@getByIdRecensable');
 
-Route::get('/recensioni/utente/{id}', 'RecensioneController@getByIdUtente');
+    Route::get('/recensioni/utente/{id}', 'RecensioneController@getByIdUtente');
 
 
 
 // Standard API per inserzione
-Route::get('/inserzioni', 'InserzioneController@inserzioni');
+    Route::get('/inserzioni', 'InserzioneController@inserzioni');
 
-Route::get('/inserzione/{id}', 'InserzioneController@inserzione');
+    Route::get('/inserzione/{id}', 'InserzioneController@inserzione');
 
-Route::post('/inserisci-inserzione', 'InserzioneController@inseriscinserzione');
+    Route::post('/inserisci-inserzione', 'InserzioneController@inseriscinserzione');
 
-Route::post('/modifica-inserzione', 'InserzioneController@modificainserzione');
+    Route::post('/modifica-inserzione', 'InserzioneController@modificainserzione');
 
-Route::post('/elimina-inserzione', 'InserzioneController@eliminainserzione');
+    Route::post('/elimina-inserzione', 'InserzioneController@eliminainserzione');
 
-Route::get('/inserzioni/{tipo}', 'InserzioneController@inserzionebytipo');
+    Route::get('/inserzioni/{tipo}', 'InserzioneController@inserzionebytipo');
 
 Route::get('/media-rate/inserzione/{id}','InserzioneController@rateById');
 
+Route::get('/inserzioni-user/{iduser}','InserzioneController@inserzionibyuser');
 
 // Standard API per avvistamento
 

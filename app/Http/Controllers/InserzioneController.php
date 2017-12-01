@@ -41,7 +41,7 @@ class InserzioneController extends Controller
             return response()->json('nessuna inserzione con id:'.$request->id, 500);
         $app = json_decode($inserzione, true);
 
-        $app['updated_at']=$inserzione->updated_at->format('d/m/Y H:m:s');
+        $app['updated_at']=$inserzione->updated_at->format('d-m-Y H:m:s');
 
         return response()->json($app,200);
     }
@@ -51,6 +51,17 @@ class InserzioneController extends Controller
 
         if(is_null($inserzione))
             return response()->json('nessuna inserzione di questo tipo:'.$tipo, 500);
+
+        if (!is_null($inserzione))
+            return response()->json($inserzione, 200);
+        return response()->json('errore', 500);
+    }
+
+    public function inserzionibyuser($user) {
+        $inserzione = Inserzione::where('user_id', $user)->get();
+
+        if(count($inserzione)==0)
+            return response()->json('nessuna inserzione di questo user:'.$user, 500);
 
         if (!is_null($inserzione))
             return response()->json($inserzione, 200);
