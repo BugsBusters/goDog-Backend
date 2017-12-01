@@ -46,7 +46,7 @@ Route::post('logout', 'Auth\LoginController@logout');
 //Route::post('elimina-indirizzo', 'IndirizzoController@delete');
 //});
 
-
+Route::group(['middleware' => 'auth:api'], function () {
 // Standard API per users
 Route::get('utenti', 'UserController@getall');
 Route::get('utente/{id}', 'UserController@getById');
@@ -100,6 +100,7 @@ Route::get('/inserzioni/{tipo}', 'InserzioneController@inserzionebytipo');
 
 Route::get('/media-rate/inserzione/{id}','InserzioneController@rateById');
 
+Route::get('/inserzioni-user/{iduser}','InserzioneController@inserzionibyuser');
 
 // Standard API per avvistamento
 
@@ -107,7 +108,7 @@ Route::get('/media-rate/inserzione/{id}','InserzioneController@rateById');
 
     Route::get('/avvistamento/{id}', 'AvvistamentoController@avvistamento');
 
-    //Route::get('/avvistamenti/{idinserzione}','AvvistamentoController@avvistamentibyinserzione');
+    Route::get('/avvistamenti/{idinserzione}','AvvistamentoController@avvistamentibyinserzione');
 
     Route::post('/inserisci-avvistamento', 'AvvistamentoController@inserisciavvistamento');
 
@@ -120,11 +121,7 @@ Route::get('/media-rate/inserzione/{id}','InserzioneController@rateById');
 
 
 
-
-
-
 });
-
 
 
 //// Standard API per users

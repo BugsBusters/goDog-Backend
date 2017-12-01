@@ -56,6 +56,17 @@ class InserzioneController extends Controller
         return response()->json('errore', 500);
     }
 
+    public function inserzionibyuser($user) {
+        $inserzione = Inserzione::where('user_id', $user)->get();
+
+        if(count($inserzione)==0)
+            return response()->json('nessuna inserzione di questo user:'.$user, 500);
+
+        if (!is_null($inserzione))
+            return response()->json($inserzione, 200);
+        return response()->json('errore', 500);
+    }
+
 
     /**
      * Crea una nuova inserzione in base ai dati della request
