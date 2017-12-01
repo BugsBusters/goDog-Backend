@@ -15,7 +15,7 @@ class InserzioneController extends Controller
      */
     public function inserzioni(){
         $inserzioni= Inserzione::all();
-        if($inserzioni==null)
+        if(is_null($inserzioni))
             return response()->json('nessuna inserzione', 500);
         $i=0;
         $app=array();
@@ -122,7 +122,17 @@ class InserzioneController extends Controller
     public function lookup(Request $request){
         $data = $request->toArray();
         $data['indirizzable_type'] = 'App\Inserzione';
-        $inserzioni = Indirizzo::where($data)->get();
-        print_r($inserzioni);die;
+
+        $indirizzi = Indirizzo::where($data)->get();
+
+        $inserzioni = array();
+            foreach ($indirizzi as $indirizzo) {
+                $inserzione = Inserzione::find($indirizzo->indrizzable_id);
+                array_push($inserzioni, $inserzione);
+            }
+
+        if(!empty($inserzioni))
+            return response()->json($inserzioni, 200);
+        return response()->json('errore', 500);
     }
 }

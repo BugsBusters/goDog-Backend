@@ -96,6 +96,11 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('/inserzioni/{tipo}', 'InserzioneController@inserzionebytipo');
 
+    //ricerca le inserzioni per filtri, possono essere passati uno o più dei seguenti campi:
+    // @integer citta per il comune
+    // @integer provincia
+    // @integer regione
+    // categoria per il tipo inserzione
     Route::get('/inserzione-lookup/', 'InserzioneController@lookup');
 // Standard API
 
